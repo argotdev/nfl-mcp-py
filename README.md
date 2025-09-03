@@ -11,12 +11,26 @@ Downloads NFL team statistics CSV files from the nflverse-data GitHub repository
 - Supports filtering by specific years
 - All 89+ statistical columns included
 
-### MCP Server
+### CSV Data Importer
+- Imports all play-by-play and game scores CSV files into separate SQLite databases
+- Handles large datasets efficiently with chunked processing
+- Creates optimized database schemas with proper indexing
+- Supports data from 2020-2025 seasons (262k+ plays, 2k+ games)
+
+### MCP Servers
+#### Team Stats Server (`nfl_stats_server.py`)
 - Query NFL team statistics through natural language with Claude
-- 7 specialized tools for different types of queries
+- 6 specialized tools for team stats queries
 - Secure database access (read-only operations)
-- Support for team comparisons, stat leaders, playoff teams, and more
-- Custom SQL query execution for advanced users
+
+#### Comprehensive Server (`nfl_comprehensive_server.py`)
+- **Complete NFL data access**: team stats, plays, and game scores
+- **8+ specialized tools** including:
+  - Game-by-game play analysis
+  - Season records and playoff results
+  - Play outcome searches
+  - Team statistics across multiple databases
+- **Multi-database support**: Works with any combination of the databases
 
 ## Setup with uv (Recommended)
 
@@ -152,12 +166,16 @@ uv run nfl_stats_server.py --db nfl_stats.db
 
 ### Quick Test
 
-Once you have data downloaded, test the server quickly:
-
 ```bash
-# Download sample data first
+# 1. Download team stats data
 uv run nfl_team_stats_downloader.py --db nfl_stats.db --years 2023
 
-# Test with MCP dev tool
-uv run mcp dev nfl_stats_server.py --db nfl_stats.db
+# 2. Import plays and scores data (if you have CSV files in nfl_stats directory)
+uv run nfl_csv_importer.py
+
+# 3. Test the comprehensive server
+uv run nfl_comprehensive_server.py --team-stats-db nfl_stats.db --plays-db nfl_plays.db --scores-db nfl_scores.db
+
+# Or test just team stats
+uv run nfl_stats_server.py --db nfl_stats.db
 ```
