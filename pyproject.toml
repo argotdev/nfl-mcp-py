@@ -1,0 +1,20 @@
+[project]
+name = "nfl-team-stats"
+version = "1.0.0"
+description = "NFL team stats downloader and MCP server for querying team statistics"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "requests>=2.31",
+    "mcp[cli]>=1.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0",
+]
