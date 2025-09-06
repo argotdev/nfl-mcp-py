@@ -32,6 +32,13 @@ Downloads NFL team statistics CSV files from the nflverse-data GitHub repository
   - Team statistics across multiple databases
 - **Multi-database support**: Works with any combination of the databases
 
+#### Live Server (`nfl_live_server.py`) ⭐ **RECOMMENDED**
+- **Everything from Comprehensive Server PLUS live data**
+- **ESPN API integration** for real-time scores and game status
+- **Live game tracking** with current scores, time remaining, and game situations
+- **Current season information** and up-to-the-minute NFL updates
+- **Historical + Live combined**: Ask about past games and current games in the same conversation
+
 ## Setup with uv (Recommended)
 
 ### Run as standalone scripts (simplest approach)
@@ -148,11 +155,22 @@ The server provides 7 tools for querying NFL team statistics:
 
 Once connected to Claude Desktop, you can ask questions like:
 
+**Live/Current:**
+- "What are the current NFL scores?"
+- "Is there a game happening right now?"
+- "Show me details about the Chiefs game today"
+- "What's the current NFL season and week?"
+
+**Historical Analysis:**
 - "Who led the NFL in passing yards in 2023?"
+- "Show me all the plays from the Bills vs Chiefs playoff game in 2024"
 - "Compare the Bills and Chiefs offensive stats from 2023"
 - "Which teams made the playoffs in 2022?"
-- "Show me the top 5 rushing offenses from 2024 regular season"
-- "What were the Packers' defensive stats in 2023?"
+- "Find all touchdown passes by Mahomes in 2023"
+
+**Combined Historical + Live:**
+- "How are the Chiefs doing this season compared to 2023?"
+- "Show me the Eagles' record this year and their current game status"
 
 ### Manual MCP Server Testing
 
@@ -173,7 +191,10 @@ uv run nfl_team_stats_downloader.py --db nfl_stats.db --years 2023
 # 2. Import plays and scores data (if you have CSV files in nfl_stats directory)
 uv run nfl_csv_importer.py
 
-# 3. Test the comprehensive server
+# 3. Test the live server (RECOMMENDED - includes everything + live ESPN data)
+uv run nfl_live_server.py --team-stats-db nfl_stats.db --plays-db nfl_plays.db --scores-db nfl_scores.db
+
+# Or test the comprehensive server (historical data only)
 uv run nfl_comprehensive_server.py --team-stats-db nfl_stats.db --plays-db nfl_plays.db --scores-db nfl_scores.db
 
 # Or test just team stats
